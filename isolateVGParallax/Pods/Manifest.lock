@@ -1,0 +1,13 @@
+PODS:
+  - PureLayout (2.0.1)
+  - VGParallaxHeader (0.0.3):
+    - PureLayout
+
+DEPENDENCIES:
+  - VGParallaxHeader
+
+SPEC CHECKSUMS:
+  PureLayout: 12eca5b6dc94f1a03fdf255d640604584ff1b55b
+  VGParallaxHeader: 685195341ae7bd34410d3e8b450938bc9ae3746f
+
+COCOAPODS: 0.34.4
