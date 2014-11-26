@@ -27,6 +27,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
+    
+    
     //we are going to explicity set a table row height
     heightTableRow = 54;
     
@@ -55,6 +58,8 @@
 }
 
 - (void)viewDidLayoutSubviews {
+    //REMEMBER, AUTO-LAYOUT OFF!!! frame changing does not work with auto-layout on
+    
     double dynamicHeight = (heightTableRow * dataArray.count) + 500; //the 500 number is just padding. If we don't have this padding, some rows in the bottom will get hidden which sucks. We can adjust this value to determine how much whitespace we have after the very last row with data
     
     self.tableView.frame = CGRectMake(0, 300, 600, dynamicHeight);
