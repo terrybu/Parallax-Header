@@ -14,8 +14,9 @@
     CGFloat tableViewYCoordinate;
     
     NSMutableArray* dataArray;
-    
     CGFloat heightTableRow;
+    
+    CGFloat totalRowsHeight;
 }
 
 @end
@@ -23,14 +24,9 @@
 @implementation FirstViewController
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
-    
-    
-    //we are going to explicity set a table row height
     heightTableRow = 54;
     
     //Fill an array with some data
@@ -38,36 +34,30 @@
     for (int i=0; i <= 100; i++) {
         [dataArray addObject:[NSString stringWithFormat:@"%d hi", i]];
     }
-    [self.tableView reloadData];
-    
-    
     
     self.scrollView.contentSize = self.myView.frame.size;
     self.scrollView.delegate = self;
     
     self.tableView.scrollEnabled = NO;
-    //be aware of this. Maybe you can allow tableview scrolling after a certain point?
-    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    
+
     imageViewYCoordinate = self.imageView.frame.origin.y;
     tableViewYCoordinate = self.tableView.frame.origin.y;
-    
     UIGraphicsBeginImageContext(self.view.bounds.size);
 }
 
-- (void)viewDidLayoutSubviews {
-    //REMEMBER, AUTO-LAYOUT OFF!!! frame changing does not work with auto-layout on
-    
-    double dynamicHeight = (heightTableRow * dataArray.count) + 500; //the 500 number is just padding. If we don't have this padding, some rows in the bottom will get hidden which sucks. We can adjust this value to determine how much whitespace we have after the very last row with data
-    
-    self.tableView.frame = CGRectMake(0, 300, 600, dynamicHeight);
-    self.myView.frame = CGRectMake(0,0,600, dynamicHeight);
-    self.scrollView.contentSize = self.myView.frame.size;
-    NSLog(@"tableview frame: %@", NSStringFromCGRect(self.tableView.frame));
-    NSLog(@"innerView frame: %@", NSStringFromCGRect(self.myView.frame));
-}
+
+
+//- (void)viewDidLayoutSubviews {
+//    
+//    double dynamicHeight = (heightTableRow * dataArray.count);
+//    self.tableView.frame = CGRectMake(0, 300, 600, 5000 + dynamicHeight);
+//    self.myView.frame = CGRectMake(0,0,600, 5000 + dynamicHeight);
+//    self.scrollView.contentSize = self.myView.frame.size;
+
+//fixed height scenarios, it's a lot easier. What do you do when your row heights are variable?
+//}
 
 
 
@@ -117,7 +107,51 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return heightTableRow;
+    
+    
+    int r = arc4random_uniform(200);
+    
+    if (r<72) {
+        
+        r = r + 25;
+        
+        
+    }
+    
+    totalRowsHeight += r;
+    
+    return r;
+    
+}
+
+-(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
+        self.tableView.frame = CGRectMake(0, 300, 600, totalRowsHeight/3);
+        self.myView.frame = CGRectMake(0,0,600,  totalRowsHeight/3);
+        self.scrollView.contentSize = self.myView.frame.size;
+    }
+}
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    int r = arc4random_uniform(500);
+//    
+//    if (r<300) {
+//        
+//        r = r + 25;
+//        
+//        
+//    }
+
+    
+//    double dynamicHeight = (heightTableRow * dataArray.count) + r;
+    //the 500 number is just padding. If we don't have this padding, some rows in the bottom will get hidden which sucks. We can adjust this value to determine how much whitespace we have after the very last row with data
+    
+//    self.tableView.frame = CGRectMake(0, 300, 600, dynamicHeight);
+//    self.myView.frame = CGRectMake(0,0,600, 10000);
+//    self.scrollView.contentSize = self.myView.frame.size;
+    
 }
 
 @end

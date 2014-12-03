@@ -23,7 +23,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="pq6-Uc-ZYe">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="1500"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="3000"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kyoto" id="9W7-ZC-uGB">
