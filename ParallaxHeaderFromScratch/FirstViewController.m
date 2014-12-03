@@ -42,6 +42,8 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 
+    self.imageView.frame = CGRectMake(0, imageViewYCoordinate, [[UIScreen mainScreen] bounds].size.width, 300);
+    
     imageViewYCoordinate = self.imageView.frame.origin.y;
     tableViewYCoordinate = self.tableView.frame.origin.y;
     UIGraphicsBeginImageContext(self.view.bounds.size);
@@ -55,7 +57,7 @@
         imageViewYCoordinate = distMoved/2;
         //imageview's y coordinate will be equal to 1/2 of the distance the scrollview traveled
     
-        self.imageView.frame = CGRectMake(0, imageViewYCoordinate, 500, 300);
+        self.imageView.frame = CGRectMake(0, imageViewYCoordinate, [[UIScreen mainScreen] bounds].size.width, 300);
         self.imageView.alpha = 1 - imageViewYCoordinate/200.0f;
     
         NSLog(@"------------------------------");
@@ -127,8 +129,10 @@
         
         //Fixed Row Height Version that adjusts to objects count in data array
         double dynamicHeight = (heightTableRow * dataArray.count) + 500; //500 padding
-        self.tableView.frame = CGRectMake(0, 300, 600, dynamicHeight);
-        self.myView.frame = CGRectMake(0,0,600, dynamicHeight);
+        self.tableView.frame = CGRectMake(0, 300, [[UIScreen mainScreen] bounds].size.width, dynamicHeight);
+        
+        //now, the view itself should be the tableview + the imageview height. This will also give good padding
+        self.myView.frame = CGRectMake(0,0,600, dynamicHeight + 300); //300 was imageview height
         self.scrollView.contentSize = self.myView.frame.size;
     }
     
