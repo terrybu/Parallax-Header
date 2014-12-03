@@ -49,17 +49,6 @@
 
 
 
-//- (void)viewDidLayoutSubviews {
-//    
-//    double dynamicHeight = (heightTableRow * dataArray.count);
-//    self.tableView.frame = CGRectMake(0, 300, 600, 5000 + dynamicHeight);
-//    self.myView.frame = CGRectMake(0,0,600, 5000 + dynamicHeight);
-//    self.scrollView.contentSize = self.myView.frame.size;
-
-//fixed height scenarios, it's a lot easier. What do you do when your row heights are variable?
-//}
-
-
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
         float distMoved = scrollView.contentOffset.y;
@@ -118,40 +107,33 @@
         
     }
     
-    totalRowsHeight += r;
     
-    return r;
+    //Variable Row Height Version
+//    totalRowsHeight += r;
+//    return r;
     
+    //Fixed Row Height Version
+    return heightTableRow;
 }
 
 -(void) tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if([indexPath row] == ((NSIndexPath*)[[tableView indexPathsForVisibleRows] lastObject]).row){
-        self.tableView.frame = CGRectMake(0, 300, 600, totalRowsHeight/3);
-        self.myView.frame = CGRectMake(0,0,600,  totalRowsHeight/3);
+        //variable Row Height Version
+//        self.tableView.frame = CGRectMake(0, 300, 600, totalRowsHeight/2.75);
+//        self.myView.frame = CGRectMake(0,0,600,  totalRowsHeight/2.75);
+//        self.scrollView.contentSize = self.myView.frame.size;
+        
+        
+        //Fixed Row Height Version that adjusts to objects count in data array
+        double dynamicHeight = (heightTableRow * dataArray.count) + 500; //500 padding
+        self.tableView.frame = CGRectMake(0, 300, 600, dynamicHeight);
+        self.myView.frame = CGRectMake(0,0,600, dynamicHeight);
         self.scrollView.contentSize = self.myView.frame.size;
     }
-}
-
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    int r = arc4random_uniform(500);
-//    
-//    if (r<300) {
-//        
-//        r = r + 25;
-//        
-//        
-//    }
-
-    
-//    double dynamicHeight = (heightTableRow * dataArray.count) + r;
-    //the 500 number is just padding. If we don't have this padding, some rows in the bottom will get hidden which sucks. We can adjust this value to determine how much whitespace we have after the very last row with data
-    
-//    self.tableView.frame = CGRectMake(0, 300, 600, dynamicHeight);
-//    self.myView.frame = CGRectMake(0,0,600, 10000);
-//    self.scrollView.contentSize = self.myView.frame.size;
     
 }
+
+
 
 @end
